@@ -1,12 +1,12 @@
 #pragma once
 
+#include "shape.hpp"
 #include <array>
 #include <memory>
 #include <raylib.h>
 #include <string>
 #include <utility>
 #include <vector>
-#include "shape.hpp"
 
 namespace gyp {
 struct statue : public rectangle {
@@ -35,10 +35,12 @@ public:
   container(const container &a);
   container(container &&a) noexcept;
   container(int pos_x, int pos_y, int width, int height);
-  container(int pos_x, int pos_y, int width, int height, int split_pos, int is_horizontal);
+  container(int pos_x, int pos_y, int width, int height, int split_pos,
+            int is_horizontal);
   ~container();
   container &operator=(const container &a);
   container &operator=(container &&a);
   int split(int split_p, int is_h);
 };
+
 } // namespace gyp

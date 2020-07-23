@@ -1,6 +1,7 @@
 #include "const.hpp"
 #include "control.hpp"
 #include "game.hpp"
+#include "playground.hpp"
 #include "song_map.hpp"
 #include <raylib.h>
 #include <thread>
