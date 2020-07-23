@@ -1,65 +1,82 @@
-#include <raylib.h>
-#include <utility>
-#include "song_map.hpp"
 #include "const.hpp"
 #include "control.hpp"
-using gyp::button_status;
+#include "game.hpp"
+#include "song_map.hpp"
+#include <raylib.h>
+#include <thread>
+#include <utility>
+
+#include <iostream>
+
 using gyp::button;
-using gyp::song_map_db;
+using gyp::button_status;
+using gyp::playground;
 using gyp::song_map;
+using gyp::song_map_db;
 
-void draw_borader(int track_number) {
-  int block_width = 200;
-  int boarder_width = 10;
-  int boarder_height = gyp::DEFAULT_HEIGH;
-  int intX = gyp::DEFAULT_WIDTH / 2;
-  int intY = 0;
-  for (int i = 0; i < track_number + 1; i++)
-    DrawRectangle(intX + (i - 2) * block_width, intY, boarder_width, boarder_height, BLACK);
-}
-
-int main(int argc, const char * argv[]) {
+int main(int  /*argc*/, const char * /*argv*/[]) {
   // Command line argument process
 
   // Init the window
   InitWindow(gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGH, "Gypsophino");
   InitAudioDevice();
   SetTargetFPS(60);
-  Music scarlet_faith = LoadMusicStream("./song_maps/scarlet_faith.mp3");
-  PlayMusicStream(scarlet_faith);
-  int current_time = 0;
   song_map_db smpdb;
   smpdb.load("./song_maps/song_map_db.json");
   song_map smp = smpdb[0];
   int block_width = 200;
   int block_height = 50;
-  button test_button(std::make_pair(50, 50), 100, 25, std::string("Test button"));
+  button test_button(50, 50, 100, 25, std::string("Test button"));
   button_status bs = gyp::normal;
+  playground plg;
+  plg.set_geometry(gyp::DEFAULT_WIDTH / 2 - 2 * block_width, 0, 4 * block_width,
+                   gyp::DEFAULT_HEIGH, gyp::DEFAULT_TRACK_NUM);
+  plg.set_playground_style(BLACK, 10);
+  plg.set_speed(10);
+  // This setter MUST be executed last.
+  plg.set_track(WHITE, BLACK, 5);
+  plg.init();
+  plg.load(&smp);
+  bool is_paused = true;
 
   // Main loop
   while (!WindowShouldClose()) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawFPS(0, 0);
-    UpdateMusicStream(scarlet_faith);
     Vector2 mouse_pos = GetMousePosition();
-    test_button.update(mouse_pos);
-    test_button.draw();
     DrawText(std::to_string(mouse_pos.x).c_str(), 50, 100, 14, BLUE);
     DrawText(std::to_string(mouse_pos.y).c_str(), 50, 150, 14, BLUE);
+    int result = test_button.interact(mouse_pos);
+    DrawText(std::to_string(result).c_str(), 50, 300, 20, BLUE);
+    test_button.draw();
     DrawText("Button status", 50, 200, 14, BLUE);
-    DrawText(std::to_string(static_cast<int>(test_button.status)).c_str(), 50, 250, 14, BLUE);
-    draw_borader(smp.track_number);
-    current_time += 10;
-    for (int i = 0; i < smp.track_number; i++) {
-      for (int j = 0; j < (int)smp.notes[i].size(); j++) {
-        int intX = gyp::DEFAULT_WIDTH / 2;
-        int intY = gyp::DEFAULT_HEIGH - (smp.notes[i][j] - current_time);
-        if (intY < 0 || intY > gyp::DEFAULT_HEIGH)
-          continue;
-        else
-          DrawRectangle(intX + (i - 2) * block_width, intY, block_width, block_height, BLACK);
-      }
+    DrawText(std::to_string(static_cast<int>(test_button.status)).c_str(), 50,
+             250, 14, BLUE);
+    if (IsKeyPressed(KEY_D)) {
+      std::cout << "d pressed" << std::endl;
+      plg[0].hit();
+    }
+    if (IsKeyPressed(KEY_F)) {
+      std::cout << "f pressed" << std::endl;
+      plg[1].hit();
+    }
+    if (IsKeyPressed(KEY_J)) {
+      std::cout << "j pressed" << std::endl;
+      plg[2].hit();
+    }
+    if (IsKeyPressed(KEY_K)) {
+      std::cout << "k pressed" << std::endl;
+      plg[3].hit();
+    }
+    if (is_paused) {
+      plg.pause();
+    } else {
+      plg.play();
+    }
+    plg.draw();
+    if (result == MOUSE_LEFT_BUTTON || IsKeyPressed(KEY_SPACE)) {
+      is_paused = !is_paused;
     }
     EndDrawing();
   }
