@@ -27,7 +27,7 @@ int main(int  /*argc*/, const char * /*argv*/[]) {
   song_map smp = smpdb[0];
   int block_width = 200;
   int block_height = 50;
-  button test_button(50, 50, 100, 25, std::string("Test button"));
+  button test_button(50, 50, 100, 25);
   button_status bs = gyp::normal;
   playground plg;
   plg.set_geometry(gyp::DEFAULT_WIDTH / 2 - 2 * block_width, 0, 4 * block_width,
@@ -52,7 +52,7 @@ int main(int  /*argc*/, const char * /*argv*/[]) {
     DrawText(std::to_string(result).c_str(), 50, 300, 20, BLUE);
     test_button.draw();
     DrawText("Button status", 50, 200, 14, BLUE);
-    DrawText(std::to_string(static_cast<int>(test_button.status)).c_str(), 50,
+    DrawText(std::to_string(static_cast<int>(test_button.get_status())).c_str(), 50,
              250, 14, BLUE);
     if (IsKeyPressed(KEY_D)) {
       std::cout << "d pressed" << std::endl;
