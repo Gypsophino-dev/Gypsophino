@@ -1,0 +1,42 @@
+{ // 建议使用osu自带的谱面编辑器，即在上面完成作谱后转译成 JSON 文件，要不然效率太低了。
+    "track_number": "4", // 轨道数目
+    "bpm": "240", // Beat per minute
+    "base_fraction": "16", // 最小音符间隔，比如你做的谱子里面间隔最小的两个音符之间相隔一个16分音符，这里就写16
+    "song_duration": "180000", // 歌曲长度，为 base_fraction * bpm * (duration in minute)
+    "offset": "0", // 标记你谱面开始的位置，单位为毫秒
+    "song_author": "Lily", // 歌曲作者
+    "name": "Scalet Rose", // 歌曲名
+    "map_author": "tonyfettes", // 你
+    "music_path": "song_maps\/scarlet_faith.mp3", // 不用写，记得把mp3发过来
+    "notes": [
+        {
+            "track": "0", // 第几个轨道，从0开始
+            "time": [
+                "0", // 在第几个 base_fraction 音符处，比如你想要在第二拍的第3个十六分音符的位置设置一个note，请写 16 + 3 = 19
+                "100",
+                "200"
+            ]
+        },
+        {
+            "track": "1",
+            "time": [
+                "100",
+                "300",
+                "500"
+            ]
+        },
+        {
+            "track": "2",
+            "time": [
+                "200",
+                "400"
+            ]
+        },
+        {
+            "track": "3",
+            "time": [
+                "300"
+            ]
+        }
+    ]
+}
