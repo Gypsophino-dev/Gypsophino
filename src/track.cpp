@@ -29,6 +29,11 @@ void track::set_note_style(int h, Color c) {
   note_style.color = c;
 }
 
+void track::set_note_style(int h, Image image) {
+  note_style.height = h;
+  note_style.image = image;
+}
+
 void track::set_time(int current_time, int visible_time, int error_time) {
   this->current_time = current_time;
   this->visible_time = visible_time;
