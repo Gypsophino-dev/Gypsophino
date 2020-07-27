@@ -37,7 +37,10 @@ public:
   void set_playground_style(Color outline_color, int outline_thickness);
   void set_speed(int speed);
   // CAUTION: set_track() must be called after setter above !!
-  void set_track(Color fill_color, Color outline_color, int outline_thickness);
+  void set_track(Color fill_color, Color outline_color, int outline_thickness,
+                 int note_height, Color note_color);
+  void set_track(Color fill_color, Color outline_color, int outline_thickness,
+                 int note_height, Image note_image);
 
   // Method
   // CAUTION: Any method must be called after set_track(),

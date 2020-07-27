@@ -29,8 +29,8 @@ void playground::set_playground_style(Color outline_color,
 
 void playground::set_speed(int speed) { this->speed = speed; }
 
-void playground::set_track(Color fill_color, Color outline_color,
-                           int outline_thickness) {
+void playground::set_track(Color fill_color, Color outline_color, int outline_thickness,
+                 int note_height, Color note_color) {
   if (speed == -1) {
     speed = DEFAULT_SPEED;
   }
@@ -44,7 +44,29 @@ void playground::set_track(Color fill_color, Color outline_color,
       push_back(track());
       back().set_geometry(x + i * track_width, y, track_width, height);
       back().set_track_style(fill_color, outline_color, outline_thickness);
-      back().set_note_style(50, BLACK);
+      back().set_note_style(note_height, note_color);
+      back().set_speed(speed);
+    }
+    is_initialized = true;
+  }
+}
+
+void playground::set_track(Color fill_color, Color outline_color, int outline_thickness,
+                 int note_height, Image note_image) {
+  if (speed == -1) {
+    speed = DEFAULT_SPEED;
+  }
+  if (is_initialized) {
+    for (auto &i : *this) {
+      i.set_track_style(fill_color, outline_color, outline_thickness);
+    }
+  } else {
+    int track_width = width / track_number;
+    for (int i = 0; i < track_number; i++) {
+      push_back(track());
+      back().set_geometry(x + i * track_width, y, track_width, height);
+      back().set_track_style(fill_color, outline_color, outline_thickness);
+      back().set_note_style(note_height, note_image);
       back().set_speed(speed);
     }
     is_initialized = true;
