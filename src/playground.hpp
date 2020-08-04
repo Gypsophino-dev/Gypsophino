@@ -25,6 +25,7 @@ private:
   Music music;
   playground_status status;
   bool is_initialized;
+  std::vector<std::vector<float>> real_notes;
 
 public:
   // Constructor & Desttructor
@@ -49,7 +50,7 @@ public:
   // Contain: [i].set_interator [i].init()
   // CAUTION: Init() must be run at first.
   void init();
-  void load(const song_map *selected_song);
+  void load(const song_map *selected_song, float fps);
   void play();  // play a single frame
   void pause(); // pause for a single frame
   void quit();

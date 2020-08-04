@@ -6,7 +6,7 @@ namespace gyp {
 playground::playground()
     : track_number(DEFAULT_TRACK_NUM), outline(DEFAULT_FG),
       thick(DEFAULT_THICKNESS), current_time(0), speed(-1), song(nullptr),
-      status(not_running), is_initialized(false) {}
+      status(not_running), is_initialized(false), real_notes(DEFAULT_TRACK_NUM) {}
 
 playground::~playground() {
   song = nullptr; // Why do this?
@@ -74,6 +74,7 @@ void playground::set_track(Color fill_color, Color outline_color, int outline_th
 }
 
 void playground::init() {
+  real_notes.resize(track_number);
   if (!IsAudioDeviceReady()) {
     InitAudioDevice();
     while (!IsAudioDeviceReady()) {
@@ -82,10 +83,20 @@ void playground::init() {
   }
 }
 
-void playground::load(const song_map *selected_song) {
+void playground::load(const song_map *selected_song, float fps) {
   song = selected_song;
+  if (song->track_number != track_number) {
+    track_number = song->track_number;
+    real_notes.resize(track_number);
+  }
+  float frame_per_fraction = 60.0F * fps / static_cast<float>(song->bpm * song->base_fraction);
   for (int i = 0; i < song->track_number; i++) {
-    at(i).set_iterator(song->notes.at(i).cbegin(), song->notes.at(i).cend());
+    for (auto j = song->notes.at(i).cbegin(); j != song->notes.at(i).cend(); j++) {
+      real_notes.at(i).push_back(static_cast<float>(*j + song->offset) * frame_per_fraction);
+    }
+  }
+  for (int i = 0; i < song->track_number; i++) {
+    at(i).set_iterator(real_notes.at(i).cbegin(), real_notes.at(i).cend());
     at(i).init();
   }
   music = LoadMusicStream(selected_song->music_path.c_str());

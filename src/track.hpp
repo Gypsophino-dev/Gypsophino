@@ -9,7 +9,7 @@
 namespace gyp {
 class track : rectangle {
 private:
-  using vci = std::vector<int>::const_iterator;
+  using vci = std::vector<float>::const_iterator;
   // Track Style
   Color fill;
   Color outline;

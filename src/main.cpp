@@ -5,11 +5,11 @@
 int main() {
   InitWindow(gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, "Gypsophino");
   SetTargetFPS(60);
-  gyp::scene test_scene(BLACK, WHITE, 120, 20);
   gyp::game test_game("./song_maps/song_map_db.json");
-  test_scene.body = test_game;
-  test_scene.enter();
-  test_scene.draw();
-  test_scene.leave();
+  test_game.set_background_image("res/background.png");
+  test_game.set_transient(BLACK, WHITE, 120, 20);
+  test_game.enter();
+  test_game.draw();
+  test_game.leave();
   return 0;
 }

@@ -1,5 +1,6 @@
 #include "track.hpp"
 #include "const.hpp"
+#include <cmath>
 
 namespace gyp {
 track::track()
@@ -48,10 +49,12 @@ void track::set_iterator(vci iter_begin, vci iter_end) {
   notes_end = iter_end;
   notes_current = iter_begin;
   notes_visible = iter_begin;
-  while (notes_current != notes_end && *notes_current < current_time) {
+  while (notes_current != notes_end &&
+         *notes_current < static_cast<float>(current_time)) {
     notes_current++;
   }
-  while (notes_visible != notes_end && *notes_visible < visible_time) {
+  while (notes_visible != notes_end &&
+         *notes_visible < static_cast<float>(visible_time)) {
     notes_visible++;
   }
 }
@@ -76,10 +79,12 @@ int track::init() {
 void track::update() {
   current_time++;
   visible_time++;
-  while (notes_current != notes_end && *notes_current < current_time) {
+  while (notes_current != notes_end &&
+         *notes_current < static_cast<float>(current_time)) {
     notes_current++;
   }
-  while (notes_visible != notes_end && *notes_visible < visible_time) {
+  while (notes_visible != notes_end &&
+         *notes_visible < static_cast<float>(visible_time)) {
     notes_visible++;
   }
 }
@@ -87,8 +92,10 @@ void track::update() {
 void track::draw() const {
   DrawRectangle(x, y, width, height, fill);
   for (vci i = notes_current; i != notes_visible && i != notes_end; i++) {
-    DrawRectangle(x, y + height - (*i - current_time) * speed, width,
-                  note_style.height, note_style.color);
+    DrawRectangle(x,
+                  y + height -
+                      (static_cast<int>(std::round(*i)) - current_time) * speed,
+                  width, note_style.height, note_style.color);
   }
   DrawRectangleLinesEx(ray_rectangle(), thick, outline);
 }
@@ -97,7 +104,8 @@ void track::hit() {
   if (notes_current == notes_end) {
     return;
   }
-  if (*notes_current >= current_time && *notes_current < visible_time) {
+  if (*notes_current >= static_cast<float>(current_time) &&
+      *notes_current < static_cast<float>(visible_time)) {
     notes_current++;
   }
 }

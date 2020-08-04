@@ -21,8 +21,8 @@ public:
   std::string difficulty_name;
   std::string music_path;
   std::vector<std::vector<int>> notes;
-  song_map();
-  ~song_map();
+  song_map() = default;
+  ~song_map() = default;
   void load(const char *filename);
   void save(const char *filename);
   void load(std::string filename);
@@ -35,8 +35,8 @@ private:
 
 public:
   int song_map_number;
-  song_map_db();
-  ~song_map_db();
+  song_map_db() = default;
+  ~song_map_db() = default;
   void load(const char *filename);
   void save(const char *filename);
   void load(std::string filename);

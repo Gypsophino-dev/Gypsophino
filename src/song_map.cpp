@@ -4,9 +4,9 @@ namespace pt = boost::property_tree;
 
 namespace gyp {
 // class song_map
-song_map::song_map() {}
-song_map::~song_map() {}
+
 void song_map::load(const char *filename) { load(std::string(filename)); }
+
 void song_map::load(std::string filename) {
   pt::ptree tree;
   pt::read_json(filename, tree);
@@ -33,7 +33,9 @@ void song_map::load(std::string filename) {
     }
   }
 }
+
 void song_map::save(const char *filename) { save(std::string(filename)); }
+
 void song_map::save(std::string filename) {
   pt::ptree tree;
   tree.put("track_number", track_number);
@@ -65,10 +67,11 @@ void song_map::save(std::string filename) {
   tree.push_back(std::make_pair("notes", notes_tree));
   pt::write_json(filename, tree);
 }
+
 // class song_map_db
-song_map_db::song_map_db() {}
-song_map_db::~song_map_db() {}
+
 void song_map_db::load(const char *filename) { load(std::string(filename)); }
+
 void song_map_db::load(std::string filename) {
   pt::ptree tree;
   pt::read_json(filename, tree);
@@ -79,7 +82,9 @@ void song_map_db::load(std::string filename) {
     content.back().second.load(content.back().first);
   }
 }
+
 void song_map_db::save(const char *filename) { save(std::string(filename)); }
+
 void song_map_db::save(std::string filename) {
   pt::ptree tree;
   tree.put("song_map_number", song_map_number);
@@ -92,9 +97,11 @@ void song_map_db::save(std::string filename) {
   tree.push_back(std::make_pair("song_maps", song_maps_tree));
   pt::write_json(filename, tree);
 }
+
 template <typename Compare> void song_map_db::sort(Compare comp) {
   std::sort(content.begin(), content.end(), comp);
 }
+
 song_map &song_map_db::operator[](size_t index) {
   return content[index].second;
 }

@@ -13,3 +13,7 @@ aux_source_directory(. DIR_SRCS)
 add_executable(Gypsophino ${DIR_SRCS})
 target_link_libraries(Gypsophino raylib)
 target_link_libraries(Gypsophino pthread)
+add_custom_target(run
+  COMMAND Gypsophino
+  DEPENDS Gypsophino
+)
