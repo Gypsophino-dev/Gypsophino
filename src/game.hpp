@@ -14,15 +14,14 @@ class game : public scene {
 private:
   song_map_db song_database;
   bool is_paused;
-  Color background;
 
 public:
   playground plg;
-  game(std::string song_db_path);
+  explicit game(std::string song_db_path);
   ~game() = default;
   void load();
   void interact();
-  void draw();
+  void draw() override;
 };
 
 } // namespace gyp

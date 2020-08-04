@@ -8,7 +8,7 @@
 namespace gyp {
 
 game::game(std::string song_db_path)
-  : is_paused(true), background(RAYWHITE) {
+  : is_paused(true) {
   song_database.load(std::move(song_db_path));
   const int block_width = 200;
   const int block_height = 50;
@@ -17,7 +17,7 @@ game::game(std::string song_db_path)
   plg.set_playground_style(BLACK, gyp::DEFAULT_THICKNESS * 2);
   plg.set_speed(gyp::DEFAULT_SPEED);
   // This setter MUST be executed last.
-  plg.set_track(gyp::DEFAULT_BG, gyp::DEFAULT_FG, gyp::DEFAULT_THICKNESS, block_height, BLACK);
+  plg.set_track(Fade(WHITE, 0.8F), gyp::DEFAULT_FG, gyp::DEFAULT_THICKNESS, block_height, BLACK);
   plg.init();
   plg.load(&song_database[0], 60);
 }
@@ -66,7 +66,9 @@ void game::interact() {
 void game::draw() {
   while (!WindowShouldClose()) {
     BeginDrawing();
-    ClearBackground(background);
+    ClearBackground(final_color);
+    DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
+                DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
     interact();
     plg.draw();
     EndDrawing();

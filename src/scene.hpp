@@ -2,13 +2,12 @@
 
 #include <raylib.h>
 #include <vector>
-#include <any>
 #include <string>
 
 namespace gyp {
 
 class scene {
-private:
+protected:
   Texture background;
   Color initial_color;
   Color final_color;

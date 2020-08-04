@@ -7,7 +7,8 @@ namespace gyp {
 
 void scene::set_background_image(std::string path = "res/background.png") {
   Image bg_img = LoadImage(path.c_str());
-  ImageResize(&bg_img, bg_img.width / bg_img.height * DEFAULT_HEIGHT, DEFAULT_HEIGHT);
+  ImageResize(&bg_img, bg_img.width / bg_img.height * DEFAULT_HEIGHT,
+              DEFAULT_HEIGHT);
   background = LoadTextureFromImage(bg_img);
   UnloadImage(bg_img);
 }
@@ -38,33 +39,34 @@ void scene::enter() {
     DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
                 DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
     DrawRectangle(0, 0, gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, current_color);
-    //DrawRectangle(0, 0, gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, BLACK);
     frame_count++;
     if (frame_count % color_stop == 0) {
-      current_color =
-          Fade(initial_color, 1.0F - alpha_step * static_cast<float>(frame_count /
-                                                                   color_stop));
+      current_color = Fade(
+          initial_color,
+          1.0F - alpha_step * static_cast<float>(frame_count / color_stop));
     }
     EndDrawing();
   }
 }
 
-void scene::draw() {
-}
+void scene::draw() {}
 
 void scene::leave() {
   int frame_count = 0;
   float alpha_step = (1.0F) / static_cast<float>(transient_length) *
                      static_cast<float>(color_stop);
-  Color current_color = Fade(initial_color, 0.0F);
+  Color current_color = Fade(final_color, 0.0F);
   while (!WindowShouldClose() && frame_count < transient_length) {
     BeginDrawing();
-    ClearBackground(final_color);
+    ClearBackground(initial_color);
+    DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
+                DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
     DrawRectangle(0, 0, gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, current_color);
     frame_count++;
     if (frame_count % color_stop == 0) {
       current_color =
-          Fade(initial_color, alpha_step * static_cast<float>(frame_count / color_stop));
+          Fade(final_color,
+               alpha_step * static_cast<float>(frame_count / color_stop));
     }
     EndDrawing();
   }
