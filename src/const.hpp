@@ -1,6 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include <string>
 
 namespace gyp {
 
@@ -12,6 +13,9 @@ const Color DEFAULT_BG = BLANK;
 const int DEFAULT_GEOMETRY = -1;
 const int DEFAULT_THICKNESS = 5;
 const int DEFAULT_SPEED = 10;
-const float DEFAULT_FONT_SIZE = 16.0;
+const float DEFAULT_FONT_SIZE = 20.0F;
+const float DEFAULT_FONT_SPACING = 0.5F;
+//extern const std::string TOP_NAME;
+extern const char * TOP_NAME;
 
 } // namespace gyp

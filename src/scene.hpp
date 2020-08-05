@@ -6,6 +6,8 @@
 
 namespace gyp {
 
+class cinema;
+
 class scene {
 protected:
   Texture background;
@@ -13,6 +15,7 @@ protected:
   Color final_color;
   int transient_length; // frame count for the whole transient effect
   int color_stop; // time between each change in color
+  cinema* cinema_call_back;
 
 public:
   scene() = default;
@@ -28,11 +31,12 @@ public:
   virtual void leave();
 };
 
-class cinema : std::vector<scene *> {
-  private:
-    size_t current_scene;
+enum scene_list { titlepage, settings, gaming, pausing, adventure };
 
+class cinema : std::vector<scene *> {
   public:
+    size_t current_scene;
+    size_t next_scene;
     cinema() = default;
     ~cinema() = default;
 };
