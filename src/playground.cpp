@@ -1,6 +1,10 @@
 #include "playground.hpp"
 #include "const.hpp"
 
+#ifndef RELEASE
+#include <iostream>
+#endif
+
 namespace gyp {
 
 playground::playground()
@@ -92,7 +96,7 @@ void playground::load(const song_map *selected_song, float fps) {
   float frame_per_fraction = 60.0F * fps / static_cast<float>(song->bpm * song->base_fraction);
   for (int i = 0; i < song->track_number; i++) {
     for (auto j = song->notes.at(i).cbegin(); j != song->notes.at(i).cend(); j++) {
-      real_notes.at(i).push_back(static_cast<float>(*j + song->offset) * frame_per_fraction);
+      real_notes.at(i).push_back((static_cast<float>(*j) + song->offset) * frame_per_fraction);
     }
   }
   for (int i = 0; i < song->track_number; i++) {
@@ -110,6 +114,9 @@ void playground::play() {
   UpdateMusicStream(music);
   status = playing;
   current_time++;
+#ifndef RELEASE
+  std::cerr << "[Info] Current time: " << current_time << std::endl;
+#endif
   for (int i = 0; i < track_number; i++) {
     at(i).update();
   }
@@ -123,8 +130,18 @@ void playground::pause() {
 }
 
 void playground::quit() {
-  StopMusicStream(music);
+  if (IsMusicPlaying(music)) {
+    StopMusicStream(music);
+  }
   UnloadMusicStream(music);
+}
+
+void playground::restart() {
+  StopMusicStream(music);
+  for (auto &i : *this) {
+    i.sync(0);
+  }
+  PlayMusicStream(music);
 }
 
 void playground::draw() const {

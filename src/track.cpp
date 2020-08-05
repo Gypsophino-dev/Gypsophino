@@ -89,6 +89,21 @@ void track::update() {
   }
 }
 
+void track::sync(int current_time) {
+  this->current_time = current_time;
+  this->visible_time = current_time + height / speed;
+  notes_current = notes_begin;
+  notes_visible = notes_begin;
+  while (notes_current != notes_end &&
+         *notes_current < static_cast<float>(this->current_time)) {
+    notes_current++;
+  }
+  while (notes_visible != notes_end &&
+         *notes_visible < static_cast<float>(this->visible_time)) {
+    notes_visible++;
+  }
+}
+
 void track::draw() const {
   DrawRectangle(x, y, width, height, fill);
   for (vci i = notes_current; i != notes_visible && i != notes_end; i++) {

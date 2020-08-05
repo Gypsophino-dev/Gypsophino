@@ -5,9 +5,7 @@ namespace pt = boost::property_tree;
 namespace gyp {
 // class song_map
 
-void song_map::load(const char *filename) { load(std::string(filename)); }
-
-void song_map::load(std::string filename) {
+void song_map::load(const std::string& filename) {
   pt::ptree tree;
   pt::read_json(filename, tree);
   track_number = tree.get<int>("track_number");
@@ -16,7 +14,7 @@ void song_map::load(std::string filename) {
   difficulty = tree.get<int>("difficulty");
   song_duration = tree.get<int>("song_duration");
   object_count = tree.get<int>("object_count");
-  offset = tree.get<int>("offset");
+  offset = tree.get<float>("offset");
 
   song_author = tree.get<std::string>("song_author");
   name = tree.get<std::string>("name");
@@ -34,9 +32,7 @@ void song_map::load(std::string filename) {
   }
 }
 
-void song_map::save(const char *filename) { save(std::string(filename)); }
-
-void song_map::save(std::string filename) {
+void song_map::save(const std::string& filename) {
   pt::ptree tree;
   tree.put("track_number", track_number);
   tree.put("bpm", bpm);
@@ -70,22 +66,18 @@ void song_map::save(std::string filename) {
 
 // class song_map_db
 
-void song_map_db::load(const char *filename) { load(std::string(filename)); }
-
-void song_map_db::load(std::string filename) {
+void song_map_db::load(const std::string& filename) {
   pt::ptree tree;
   pt::read_json(filename, tree);
   tree.get<int>("song_map_number");
   for (pt::ptree::value_type &single_song : tree.get_child("song_maps")) {
-    content.push_back(std::make_pair(
-        single_song.second.get_value<std::string>(), song_map()));
+    content.emplace_back(single_song.second.get_value<std::string>(),
+                         song_map());
     content.back().second.load(content.back().first);
   }
 }
 
-void song_map_db::save(const char *filename) { save(std::string(filename)); }
-
-void song_map_db::save(std::string filename) {
+void song_map_db::save(const std::string& filename) {
   pt::ptree tree;
   tree.put("song_map_number", song_map_number);
   pt::ptree song_maps_tree;
@@ -105,4 +97,5 @@ template <typename Compare> void song_map_db::sort(Compare comp) {
 song_map &song_map_db::operator[](size_t index) {
   return content[index].second;
 }
+
 } // namespace gyp

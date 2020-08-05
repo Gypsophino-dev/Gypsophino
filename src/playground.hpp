@@ -54,6 +54,7 @@ public:
   void play();  // play a single frame
   void pause(); // pause for a single frame
   void quit();
+  void restart();
   void draw() const;
 };
 

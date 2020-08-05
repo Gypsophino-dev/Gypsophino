@@ -13,9 +13,9 @@ game::game(std::string song_db_path)
   const int block_width = 200;
   const int block_height = 50;
   plg.set_geometry(gyp::DEFAULT_WIDTH / 2 - 2 * block_width, 0, 4 * block_width,
-                   gyp::DEFAULT_HEIGHT, gyp::DEFAULT_TRACK_NUM);
+                   gyp::DEFAULT_HEIGHT, song_database[0].track_number);
   plg.set_playground_style(BLACK, gyp::DEFAULT_THICKNESS * 2);
-  plg.set_speed(gyp::DEFAULT_SPEED);
+  plg.set_speed(gyp::DEFAULT_SPEED * 2);
   // This setter MUST be executed last.
   plg.set_track(Fade(WHITE, 0.8F), gyp::DEFAULT_FG, gyp::DEFAULT_THICKNESS, block_height, BLACK);
   plg.init();
@@ -51,6 +51,9 @@ void game::interact() {
     }
     if (IsKeyPressed(KEY_K)) {
       plg[3].hit();
+    }
+    if (IsKeyPressed(KEY_R)) {
+      plg.restart();
     }
   }
   if (IsKeyPressed(KEY_SPACE)) {

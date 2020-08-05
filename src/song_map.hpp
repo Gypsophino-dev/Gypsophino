@@ -14,7 +14,7 @@ public:
   int difficulty;
   int song_duration; // In ms
   int object_count;
-  int offset; // In ms
+  float offset; // In ms
   std::string song_author;
   std::string name;
   std::string map_author;
@@ -23,10 +23,8 @@ public:
   std::vector<std::vector<int>> notes;
   song_map() = default;
   ~song_map() = default;
-  void load(const char *filename);
-  void save(const char *filename);
-  void load(std::string filename);
-  void save(std::string filename);
+  void load(const std::string& filename);
+  void save(const std::string& filename);
 };
 
 class song_map_db {
@@ -37,12 +35,11 @@ public:
   int song_map_number;
   song_map_db() = default;
   ~song_map_db() = default;
-  void load(const char *filename);
-  void save(const char *filename);
-  void load(std::string filename);
-  void save(std::string filename);
+  void load(const std::string& filename);
+  void save(const std::string& filename);
   void import_song_map(const char *path);
   template <typename Compare> void sort(Compare comp);
   song_map &operator[](size_t index);
 };
+
 } // namespace gyp
