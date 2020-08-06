@@ -36,6 +36,7 @@ public:
 
 class cinema : public std::vector<scene *> {
   public:
+    int prev_scene;
     int current_scene;
     int next_scene;
     cinema();

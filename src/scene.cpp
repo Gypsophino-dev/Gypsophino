@@ -78,19 +78,21 @@ void scene::leave() {
 
 // Class cinema
 
-cinema::cinema() : current_scene(-1), next_scene(-1) {}
+cinema::cinema() : prev_scene(-1), current_scene(-1), next_scene(-1) {}
 
 void cinema::play() {
-  for (int i = 0; i < size(); ) {
+  for (int i = 0; i < static_cast<int>(size()); ) {
     at(i)->enter();
     at(i)->draw();
     at(i)->leave();
+    prev_scene = i;
     if (next_scene != -1) {
       i = next_scene;
       next_scene = -1;
     } else {
       i++;
     }
+    current_scene = i;
   }
 }
 

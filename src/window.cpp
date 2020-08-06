@@ -1,16 +1,23 @@
 #include "window.hpp"
 
+#ifndef RELEASE
+#include <iostream>
+#endif // RELEASE
+
 namespace gyp {
 
 window::window() {}
 
 window::window(int width, int height, std::string window_title, int fps)
     : width(width), height(height), window_title(std::move(window_title)),
-      fps(fps), is_initialized(false) {
+      fps(fps), volume(1.0F), is_initialized(false) {
+  InitAudioDevice();
   InitWindow(width, height, window_title.c_str());
+  SetMasterVolume(volume);
 }
 
 window::~window() {
+  CloseAudioDevice();
   CloseWindow();
 }
 
@@ -28,6 +35,19 @@ void window::set_title(const std::string& window_title) {
 void window::set_fps(int fps) {
   this->fps = fps;
   SetTargetFPS(fps);
+}
+
+void window::set_volume(float volume) {
+  this->volume = volume;
+  SetMasterVolume(volume);
+}
+
+void window::change_volume(float delta) {
+#ifndef RELEASE
+  std::cerr << "[Debug] delta: " << delta << std::endl;
+#endif // RELEASE
+  this->volume += delta;
+  SetMasterVolume(this->volume);
 }
 
 [[nodiscard]] int window::get_fps() const {
@@ -48,6 +68,10 @@ void window::set_fps(int fps) {
 
 [[nodiscard]] std::string window::get_window_title() const {
   return window_title;
+}
+
+[[nodiscard]] float window::get_volume() const {
+  return volume;
 }
 
 void window::detect() {
