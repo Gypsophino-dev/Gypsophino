@@ -6,6 +6,8 @@
 
 ## Compile
 
+Depend on `raylib`, `cmake` and a sane C++17 compiler.
+
 ### Linux
 
 ```bash
@@ -18,6 +20,10 @@ ln -s ../res res
 ./Gypsophino
 ```
 
+### Windows/MacOS
+
+I don't know.
+
 ## Basic Usage
 
 | Key | Effect |
@@ -25,3 +31,7 @@ ln -s ../res res
 | `Esc` | quit |
 | `p` | pause/replay |
 | `d`/`f`/`j`/`k` | hit falling note |
+
+## License
+
+Do What the Fuck You Want to Public License
