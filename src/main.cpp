@@ -7,13 +7,11 @@
 int main() {
   InitWindow(gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, "Gypsophino");
   SetTargetFPS(60);
+  gyp::cinema game_cinema;
   gyp::game test_game("./song_maps/song_map_db.json");
   test_game.set_background_image("res/background.png");
   test_game.set_transient(BLACK, WHITE, 120, 20);
-  test_game.enter();
-  test_game.draw();
-  test_game.leave();
-  /*
+  test_game.set_cinema_call_back(&game_cinema);
   gyp::title starter;
   std::vector<gyp::button<int>> button_initial_list;
   gyp::button<int> start_button;
@@ -26,9 +24,9 @@ int main() {
   starter.set_button_list(std::move(button_initial_list));
   starter.set_background_image("res/background.png");
   starter.set_transient(BLACK, WHITE, 120, 20);
-  starter.enter();
-  starter.draw();
-  starter.leave();
-  */
+  starter.set_cinema_call_back(&game_cinema);
+  game_cinema.push_back(static_cast<gyp::scene *>(&starter));
+  game_cinema.push_back(static_cast<gyp::scene *>(&test_game));
+  game_cinema.play();
   return 0;
 }

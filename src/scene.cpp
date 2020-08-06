@@ -5,7 +5,7 @@
 
 namespace gyp {
 
-void scene::set_background_image(std::string path = "res/background.png") {
+void scene::set_background_image(const std::string & path) {
   Image bg_img = LoadImage(path.c_str());
   ImageResize(&bg_img, bg_img.width / bg_img.height * DEFAULT_HEIGHT,
               DEFAULT_HEIGHT);
@@ -21,11 +21,15 @@ void scene::set_transient(Color initial_color, Color final_color,
   this->color_stop = color_stop;
 }
 
+void scene::set_cinema_call_back(cinema * cinema_call_back) {
+  this->cinema_call_back = cinema_call_back;
+}
+
 scene::scene(Color initial_color, Color final_color, int transient_length,
              int color_stop)
     : initial_color(initial_color), final_color(final_color),
       transient_length(transient_length), color_stop(color_stop) {
-  set_background_image();
+  set_background_image("res/background.png");
 }
 
 void scene::enter() {
@@ -69,6 +73,24 @@ void scene::leave() {
                alpha_step * static_cast<float>(frame_count / color_stop));
     }
     EndDrawing();
+  }
+}
+
+// Class cinema
+
+cinema::cinema() : current_scene(-1), next_scene(-1) {}
+
+void cinema::play() {
+  for (int i = 0; i < size(); ) {
+    at(i)->enter();
+    at(i)->draw();
+    at(i)->leave();
+    if (next_scene != -1) {
+      i = next_scene;
+      next_scene = -1;
+    } else {
+      i++;
+    }
   }
 }
 
