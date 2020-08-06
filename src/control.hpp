@@ -171,4 +171,49 @@ callback_type button<callback_type>::interact(Vector2 mouse) {
   return call_back[0];
 }
 
+template <class callback_type>
+class timer {
+  private:
+    int count_down{};
+    std::array<callback_type, 2> call_back;
+
+  public:
+    timer() = default;
+    explicit timer(int count_down);
+    ~timer() = default;
+    // Setter
+    void set_count_down(int count_down);
+    void set_call_back(std::array<callback_type, 2> call_back);
+    //
+    void draw();
+    callback_type interact();
+};
+
+template <class callback_type>
+timer<callback_type>::timer(int count_down) : count_down(count_down) {}
+
+template <class callback_type>
+void timer<callback_type>::set_count_down(int count_down) {
+  this->count_down = count_down;
+}
+
+template <class callback_type>
+void timer<callback_type>::set_call_back(std::array<callback_type, 2> call_back) {
+  this->call_back = call_back;
+}
+
+template <class callback_type>
+void timer<callback_type>::draw() {
+  count_down--;
+}
+
+template <class callback_type>
+callback_type timer<callback_type>::interact() {
+  count_down--;
+  if (count_down <= 0) {
+    return call_back[1];
+  }
+  return call_back[0];
+}
+
 } // namespace gyp

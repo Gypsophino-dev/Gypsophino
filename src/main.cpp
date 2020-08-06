@@ -2,7 +2,11 @@
 #include "game.hpp"
 #include "const.hpp"
 #include "title.hpp"
+#include "slideshow.hpp"
+
 #include <vector>
+#include <array>
+#include <string>
 
 int main() {
   InitWindow(gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, "Gypsophino");
@@ -10,7 +14,7 @@ int main() {
   gyp::cinema game_cinema;
   gyp::game test_game("./song_maps/song_map_db.json");
   test_game.set_background_image("res/background.png");
-  test_game.set_transient(BLACK, WHITE, 120, 20);
+  test_game.set_transient(BLACK, WHITE, 60, 1);
   test_game.set_cinema_call_back(&game_cinema);
   gyp::title starter;
   std::vector<gyp::button<int>> button_initial_list;
@@ -23,9 +27,22 @@ int main() {
   button_initial_list.push_back(start_button);
   starter.set_button_list(std::move(button_initial_list));
   starter.set_background_image("res/background.png");
-  starter.set_transient(BLACK, WHITE, 120, 20);
+  starter.set_transient(BLACK, WHITE, 60, 1);
   starter.set_cinema_call_back(&game_cinema);
+  /*
   game_cinema.push_back(static_cast<gyp::scene *>(&starter));
+  game_cinema.push_back(static_cast<gyp::scene *>(&test_game));
+  game_cinema.play();
+  */
+  std::array<gyp::slideshow, 4> interplay;
+  for (int i = 0; i < 4; i++) {
+    interplay.at(i).set_background_image("res/chap_0" + std::to_string(i + 1) + ".png");
+    interplay.at(i).set_transient(BLACK, WHITE, 60, 1);
+    interplay.at(i).set_cinema_call_back(&game_cinema);
+    interplay.at(i).set_timeout(120);
+    interplay.at(i).set_call_back(-1, i + 1);
+    game_cinema.push_back(static_cast<gyp::scene *>(&interplay.at(i)));
+  }
   game_cinema.push_back(static_cast<gyp::scene *>(&test_game));
   game_cinema.play();
   return 0;

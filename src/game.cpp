@@ -26,60 +26,6 @@ void game::load(int song_index) {
   plg.load(&song_database[song_index], 60);
 }
 
-/*
-void game::interact() {
-  if (IsKeyDown(KEY_D)) {
-#ifndef RELEASE
-    std::cout << "d" << std::endl;
-#endif
-    plg[0].draw_pressed();
-  }
-  if (IsKeyDown(KEY_F)) {
-#ifndef RELEASE
-    std::cout << "f" << std::endl;
-#endif
-    plg[1].draw_pressed();
-  }
-  if (IsKeyDown(KEY_J)) {
-#ifndef RELEASE
-    std::cout << "j" << std::endl;
-#endif
-    plg[2].draw_pressed();
-  }
-  if (IsKeyDown(KEY_K)) {
-#ifndef RELEASE
-    std::cout << "k" << std::endl;
-#endif
-    plg[3].draw_pressed();
-  }
-  if (!is_paused) {
-    if (IsKeyPressed(KEY_D)) {
-      plg[0].hit();
-    }
-    if (IsKeyPressed(KEY_F)) {
-      plg[1].hit();
-    }
-    if (IsKeyPressed(KEY_J)) {
-      plg[2].hit();
-    }
-    if (IsKeyPressed(KEY_K)) {
-      plg[3].hit();
-    }
-    if (IsKeyPressed(KEY_R)) {
-      plg.restart();
-    }
-  }
-  if (IsKeyPressed(KEY_SPACE)) {
-    is_paused = !is_paused;
-  }
-  if (is_paused) {
-    plg.pause();
-  } else {
-    plg.play();
-  }
-}
-*/
-
 void game::interact() {
   if (is_paused) {
     plg.pause();
