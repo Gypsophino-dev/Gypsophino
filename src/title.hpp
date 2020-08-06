@@ -12,6 +12,7 @@ private:
 
 public:
   title() = default;
+  ~title() = default;
   explicit title(std::string title_name);
   // void set_button_list(const button& style, std::vector<std::string>&&
   // string_list);

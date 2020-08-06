@@ -16,11 +16,15 @@ struct character : statue {
 };
 
 class parabolic_func {
+private:
+  int error_time;
 
 public:
   parabolic_func() = default;
   ~parabolic_func() = default;
-  double operator()(int hit_time, int target_time);
+  void set_error(int error_time);
+  [[nodiscard]] int get_error() const;
+  float operator()(int hit_time, int target_time) const;
 };
 
 template <typename CalcFunc = parabolic_func>
@@ -32,7 +36,7 @@ private:
 
 public:
   int total;
-  double current;
+  float current;
   score() {
     letter_grade_table[0] = std::make_pair(std::string("D"), 70);
     letter_grade_table[1] = std::make_pair(std::string("C"), 80);
@@ -44,6 +48,7 @@ public:
     current = 0;
   }
   ~score() = default;
+  void set_error(int error_time) { fn.set_error(error_time); }
   void add(int hit_time, int target_time) {
     current += fn(hit_time, target_time);
   }

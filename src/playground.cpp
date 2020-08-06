@@ -1,16 +1,15 @@
 #include "playground.hpp"
 #include "const.hpp"
 
-#ifndef RELEASE
-#include <iostream>
-#endif
+#include <string>
 
 namespace gyp {
 
 playground::playground()
     : track_number(DEFAULT_TRACK_NUM), outline(DEFAULT_FG),
       thick(DEFAULT_THICKNESS), current_time(0), speed(-1), song(nullptr),
-      status(not_running), is_initialized(false), real_notes(DEFAULT_TRACK_NUM) {}
+      status(not_running), is_initialized(false), real_notes(DEFAULT_TRACK_NUM),
+      total_score(0) {}
 
 playground::~playground() {
   song = nullptr; // Why do this?
@@ -39,22 +38,46 @@ void playground::set_track(Color fill_color, Color outline_color, int outline_th
     speed = DEFAULT_SPEED;
   }
   if (is_initialized) {
-    for (auto &i : *this) {
-      i.set_track_style(fill_color, outline_color, outline_thickness);
+    if (track_number % 2 == 1) {
+      at(track_number / 2)
+          .set_track_style(fill_color, outline_color, outline_thickness,
+                           DEFAULT_KEY_BINDING[4]);
+    }
+    for (int i = 0; i < track_number / 2; i++) {
+      at(i).set_track_style(fill_color, outline_color, outline_thickness, DEFAULT_KEY_BINDING.at(4 - track_number / 2 + i));
+      at(i).set_track_style(fill_color, outline_color, outline_thickness, DEFAULT_KEY_BINDING.at(4 + track_number / 2 - i));
     }
   } else {
     int track_width = width / track_number;
-    for (int i = 0; i < track_number; i++) {
+    for (int i = 0; i < track_number / 2; i++) {
       push_back(track());
       back().set_geometry(x + i * track_width, y, track_width, height);
-      back().set_track_style(fill_color, outline_color, outline_thickness);
+      back().set_track_style(fill_color, outline_color, outline_thickness, DEFAULT_KEY_BINDING.at(4 - track_number / 2 + i));
       back().set_note_style(note_height, note_color);
+      back().set_time(0, 0, 10);
+      back().set_speed(speed);
+    }
+    if (track_number % 2 == 1) {
+      push_back(track());
+      back().set_geometry(x + (track_number / 2) * track_width, y, track_width, height);
+      back().set_track_style(fill_color, outline_color, outline_thickness, DEFAULT_KEY_BINDING.at(4));
+      back().set_note_style(note_height, note_color);
+      back().set_time(0, 0, 10);
+      back().set_speed(speed);
+    }
+    for (int i = (track_number + 1) / 2; i < track_number; i++) {
+      push_back(track());
+      back().set_geometry(x + i * track_width, y, track_width, height);
+      back().set_track_style(fill_color, outline_color, outline_thickness, DEFAULT_KEY_BINDING.at(4 - track_number / 2 + i));
+      back().set_note_style(note_height, note_color);
+      back().set_time(0, 0, 10);
       back().set_speed(speed);
     }
     is_initialized = true;
   }
 }
 
+/*
 void playground::set_track(Color fill_color, Color outline_color, int outline_thickness,
                  int note_height, Image note_image) {
   if (speed == -1) {
@@ -71,11 +94,13 @@ void playground::set_track(Color fill_color, Color outline_color, int outline_th
       back().set_geometry(x + i * track_width, y, track_width, height);
       back().set_track_style(fill_color, outline_color, outline_thickness);
       back().set_note_style(note_height, note_image);
+      back().set_time(0, 0, 10);
       back().set_speed(speed);
     }
     is_initialized = true;
   }
 }
+*/
 
 void playground::init() {
   real_notes.resize(track_number);
@@ -114,11 +139,10 @@ void playground::play() {
   UpdateMusicStream(music);
   status = playing;
   current_time++;
-#ifndef RELEASE
-  std::cerr << "[Info] Current time: " << current_time << std::endl;
-#endif
+  total_score = 0;
   for (int i = 0; i < track_number; i++) {
     at(i).update();
+    total_score += at(i).get_score();
   }
 }
 
@@ -149,6 +173,7 @@ void playground::draw() const {
     i.draw();
   }
   DrawRectangleLinesEx(this->ray_rectangle(), thick, outline);
+  DrawText(std::to_string(total_score).c_str(), 0, 0, 30.0F, BLACK);
 }
 
 } // namespace gyp

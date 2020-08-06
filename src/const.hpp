@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 #include <string>
+#include <array>
 
 namespace gyp {
 
@@ -17,5 +18,6 @@ const float DEFAULT_FONT_SIZE = 20.0F;
 const float DEFAULT_FONT_SPACING = 0.5F;
 //extern const std::string TOP_NAME;
 extern const char * TOP_NAME;
+extern const std::array<KeyboardKey, 9> DEFAULT_KEY_BINDING;
 
 } // namespace gyp

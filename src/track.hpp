@@ -14,6 +14,7 @@ private:
   Color fill;
   Color outline;
   int thick;
+  KeyboardKey bind_key;
   // Node Style
   note note_style;
   // Timing
@@ -30,6 +31,7 @@ private:
   vci notes_visible; // For drawing
   // Score
   score<parabolic_func> track_score;
+  int judge_height;
 
 public:
   // Constructor & Destructor
@@ -40,19 +42,24 @@ public:
 
   // Setter
   void set_geometry(int pos_x, int pos_y, int width, int height);
-  void set_track_style(Color fill_color, Color outline_color, int outline_thickness);
+  void set_track_style(Color fill_color, Color outline_color, int outline_thickness, KeyboardKey bind_key);
   void set_note_style(int height, Color color);
   void set_note_style(int height, Image image);
   void set_time(int current_time, int visible_time, int error_time);
   void set_speed(int speed);
   void set_iterator(vci iter_begin, vci iter_end);
 
+  // Getter
+  [[nodiscard]] float get_score() const;
+
   // Method
   int init();
   void update();
   void sync(int current_time);
   void draw() const;
+  void draw_pressed() const;
   void hit(); // just for update the canvas, not for score
+  void interact();
 };
 
 } // namespace gyp

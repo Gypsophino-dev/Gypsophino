@@ -16,10 +16,17 @@ public:
 //  rectangle &operator=(const rectangle &a);
 //  rectangle &operator=(rectangle &&a);
   ~rectangle() = default;
-  Rectangle ray_rectangle() const;
+  [[nodiscard]] Rectangle ray_rectangle() const;
 };
+
 struct vector2d {
+public:
   int x;
   int y;
+  vector2d();
+  vector2d(int x, int y);
+  ~vector2d() = default;
+  [[nodiscard]] Vector2 ray_vector2d() const;
 };
+
 } // namespace gyp

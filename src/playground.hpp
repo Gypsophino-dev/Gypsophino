@@ -26,6 +26,7 @@ private:
   playground_status status;
   bool is_initialized;
   std::vector<std::vector<float>> real_notes;
+  float total_score;
 
 public:
   // Constructor & Desttructor

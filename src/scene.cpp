@@ -55,17 +55,17 @@ void scene::leave() {
   int frame_count = 0;
   float alpha_step = (1.0F) / static_cast<float>(transient_length) *
                      static_cast<float>(color_stop);
-  Color current_color = Fade(final_color, 0.0F);
+  Color current_color = Fade(initial_color, 0.0F);
   while (!WindowShouldClose() && frame_count < transient_length) {
     BeginDrawing();
-    ClearBackground(initial_color);
+    ClearBackground(final_color);
     DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
                 DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
     DrawRectangle(0, 0, gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, current_color);
     frame_count++;
     if (frame_count % color_stop == 0) {
       current_color =
-          Fade(final_color,
+          Fade(initial_color,
                alpha_step * static_cast<float>(frame_count / color_stop));
     }
     EndDrawing();

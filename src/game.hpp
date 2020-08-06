@@ -17,9 +17,9 @@ private:
 
 public:
   playground plg;
-  explicit game(std::string song_db_path);
+  explicit game(const std::string& song_db_path);
   ~game() = default;
-  void load();
+  void load(int song_index);
   void interact();
   void draw() override;
 };
