@@ -11,7 +11,8 @@ void titlepage::set_button_list(std::vector<button<int>> &&button_list) {
   this->button_list = std::move(button_list);
 }
 
-void titlepage::set_title(const std::string& title, Font font, float font_size, float spacing, Color font_color) {
+void titlepage::set_title(const std::string &title, Font font, float font_size,
+                          float spacing, Color font_color) {
   this->title = title;
   this->font = font;
   this->font_size = font_size;
