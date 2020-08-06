@@ -25,6 +25,7 @@ public:
   int y;
   vector2d();
   vector2d(int x, int y);
+  explicit vector2d(Vector2 other);
   ~vector2d() = default;
   [[nodiscard]] Vector2 ray_vector2d() const;
 };

@@ -20,6 +20,9 @@ vector2d::vector2d() : x(0), y(0) {}
 
 vector2d::vector2d(int x, int y) : x(x), y(y) {}
 
+vector2d::vector2d(Vector2 other)
+    : x(static_cast<int>(other.x)), y(static_cast<int>(other.y)) {}
+
 [[nodiscard]] Vector2 vector2d::ray_vector2d() const {
   Vector2 ret;
   ret.x = static_cast<float>(x);

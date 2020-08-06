@@ -32,7 +32,7 @@ public:
   virtual void leave();
 };
 
-enum scene_list { titlepage, settings, gaming, pausing, adventure };
+//enum scene_list { title_page, settings, gaming, pausing, adventure };
 
 class cinema : public std::vector<scene *> {
   public:
