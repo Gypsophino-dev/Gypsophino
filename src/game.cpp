@@ -26,7 +26,7 @@ void game::load(int song_index) {
   plg.load(&song_database[song_index], 60);
 }
 
-void game::interact() {
+int game::interact() {
   if (is_paused) {
     plg.pause();
   } else {
@@ -43,6 +43,11 @@ void game::interact() {
   if (IsKeyPressed(KEY_R)) {
     plg.restart();
   }
+  if (IsKeyPressed(KEY_Q)) {
+    plg.quit();
+    return 1;
+  }
+  return 0;
 }
 
 void game::draw() {
@@ -52,8 +57,11 @@ void game::draw() {
     DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
                 DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
     plg.draw();
-    interact();
+    int ret = interact();
     EndDrawing();
+    if (ret == 1) {
+      return;
+    }
   }
 }
 

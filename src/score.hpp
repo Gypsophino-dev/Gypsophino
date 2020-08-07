@@ -28,7 +28,7 @@ private:
   CalcFunc fn;
 
 public:
-  int total;
+  float total;
   float current;
   score() {
     letter_grade_table[0] = std::make_pair(std::string("D"), 70);
@@ -37,12 +37,13 @@ public:
     letter_grade_table[3] = std::make_pair(std::string("A"), 95);
     letter_grade_table[4] = std::make_pair(std::string("S"), 99);
     letter_grade_table[5] = std::make_pair(std::string("SS"), 100);
-    total = GYP_MAX_SCORE;
+    total = 0;
     current = 0;
   }
   ~score() = default;
   void set_error(int error_time) { fn.set_error(error_time); }
   void add(int hit_time, int target_time) {
+    total += 1;
     current += fn(hit_time, target_time);
   }
   std::string get_letter_grade() {

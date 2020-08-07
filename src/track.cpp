@@ -64,7 +64,7 @@ void track::set_iterator(vci iter_begin, vci iter_end) {
 }
 
 [[nodiscard]] float track::get_score() const {
-  return track_score.current;
+  return track_score.current / (track_score.total == 0 ? 1 : track_score.total);
 }
 
 int track::init() {

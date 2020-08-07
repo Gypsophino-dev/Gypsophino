@@ -20,7 +20,7 @@ public:
   explicit game(const std::string& song_db_path);
   ~game() = default;
   void load(int song_index);
-  void interact();
+  int interact();
   void draw() override;
 };
 

@@ -22,7 +22,9 @@ public:
   void set_window_call_back(window *window_call_back);
   // Method
   int interact_button_list();
+  void enter() override;
   void draw() override;
+  void leave() override;
 };
 
 } // namespace gyp

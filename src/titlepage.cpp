@@ -40,11 +40,13 @@ void titlepage::draw() {
     DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
                 DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
     int ret = interact_button_list();
+    /* No need to draw a title since it is embedded in the cover pic.
     DrawTextEx(font, title.c_str(),
                vector2d(DEFAULT_WIDTH / 2 - title_size.x / 2,
-                        DEFAULT_HEIGHT / 2 - title_size.y / 2)
+                        DEFAULT_HEIGHT / 3 - title_size.y / 2)
                    .ray_vector2d(),
                font_size, spacing, font_color);
+    */
     EndDrawing();
     if (ret != -1) {
       return;

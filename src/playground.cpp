@@ -144,6 +144,7 @@ void playground::play() {
     at(i).update();
     total_score += at(i).get_score();
   }
+  total_score = total_score / static_cast<float>(track_number);
 }
 
 void playground::pause() {
@@ -173,7 +174,7 @@ void playground::draw() const {
     i.draw();
   }
   DrawRectangleLinesEx(this->ray_rectangle(), thick, outline);
-  DrawText(std::to_string(total_score).c_str(), 0, 0, 30.0F, BLACK);
+  DrawText(std::to_string(total_score * 100.0F).c_str(), 10, 10, 40.0F, BLACK);
 }
 
 } // namespace gyp

@@ -28,6 +28,27 @@ int setting::interact_button_list() {
   return -1;
 }
 
+void setting::enter() {
+  int frame_count = 0;
+  float alpha_step = (0.2F) / static_cast<float>(transient_length) *
+                     static_cast<float>(color_stop);
+  Color current_color = Fade(initial_color, 1.0F);
+  while (!WindowShouldClose() && frame_count < transient_length) {
+    BeginDrawing();
+    ClearBackground(final_color);
+    DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
+                DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
+    DrawRectangle(0, 0, gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, current_color);
+    frame_count++;
+    if (frame_count % color_stop == 0) {
+      current_color = Fade(
+          initial_color,
+          1.0F - alpha_step * static_cast<float>(frame_count / color_stop));
+    }
+    EndDrawing();
+  }
+}
+
 void setting::draw() {
   while (!WindowShouldClose()) {
     BeginDrawing();
@@ -37,10 +58,11 @@ void setting::draw() {
     vector2d current_volume_size(MeasureTextEx(GetFontDefault(), current_volume_str.c_str(), 20.0F, 1.5F));
     DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
                 DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
+    DrawRectangle(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT, Fade(BLACK, 0.8F));
     DrawTextEx(GetFontDefault(), current_volume_str.c_str(),
                vector2d(DEFAULT_WIDTH / 2 - current_volume_size.x / 2,
                         DEFAULT_HEIGHT / 2 - current_volume_size.y / 2).ray_vector2d(),
-               20.0F, 1.5F, BLACK);
+               30.0F, 2.5F, WHITE);
     int ret = interact_button_list();
     EndDrawing();
     if (ret != -1) {
@@ -53,6 +75,27 @@ void setting::draw() {
         return;
       }
     }
+  }
+}
+
+void setting::leave() {
+  int frame_count = 0;
+  float alpha_step = (1.0F) / static_cast<float>(transient_length) *
+                     static_cast<float>(color_stop);
+  Color current_color = Fade(initial_color, 0.0F);
+  while (!WindowShouldClose() && frame_count < transient_length) {
+    BeginDrawing();
+    ClearBackground(final_color);
+    DrawTexture(background, DEFAULT_WIDTH / 2 - background.width / 2,
+                DEFAULT_HEIGHT / 2 - background.height / 2, WHITE);
+    DrawRectangle(0, 0, gyp::DEFAULT_WIDTH, gyp::DEFAULT_HEIGHT, current_color);
+    frame_count++;
+    if (frame_count % color_stop == 0) {
+      current_color =
+          Fade(initial_color,
+               alpha_step * static_cast<float>(frame_count / color_stop));
+    }
+    EndDrawing();
   }
 }
 

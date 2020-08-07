@@ -7,7 +7,7 @@ namespace gyp {
 
 void scene::set_background_image(const std::string & path) {
   Image bg_img = LoadImage(path.c_str());
-  ImageResize(&bg_img, bg_img.width / bg_img.height * DEFAULT_HEIGHT,
+  ImageResize(&bg_img, bg_img.width * DEFAULT_HEIGHT / bg_img.height,
               DEFAULT_HEIGHT);
   background = LoadTextureFromImage(bg_img);
   UnloadImage(bg_img);
