@@ -11,8 +11,9 @@ window::window() {}
 window::window(int width, int height, std::string window_title, int fps)
     : width(width), height(height), window_title(std::move(window_title)),
       fps(fps), volume(1.0F), is_initialized(false) {
-  InitAudioDevice();
   InitWindow(width, height, window_title.c_str());
+  SetTargetFPS(fps);
+  InitAudioDevice();
   SetMasterVolume(volume);
 }
 

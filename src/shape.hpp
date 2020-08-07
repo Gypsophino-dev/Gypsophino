@@ -31,17 +31,4 @@ public:
   [[nodiscard]] Vector2 ray_vector2d() const;
 };
 
-class text : vector2d {
-private:
-  Font font;
-  float size;
-  float spacing;
-  Color color;
-  std::string content;
-
-public:
-  text();
-  ~text();
-};
-
 } // namespace gyp

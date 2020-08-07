@@ -4,10 +4,6 @@
 #include <utility>
 #include <string>
 
-#ifndef RELEASE
-#include <iostream>
-#endif // RELEASE
-
 namespace gyp {
 
 setting::setting(std::vector<button<int>> button_list, window *window_call_back)
@@ -48,9 +44,6 @@ void setting::draw() {
     int ret = interact_button_list();
     EndDrawing();
     if (ret != -1) {
-#ifndef RELEASE
-        std::cerr << "[Debug] setting_page draw ret: " << ret << std::endl;
-#endif // RELEASE
       if (ret == 0) {
         window_call_back->change_volume(-0.1F);
       } else if (ret == 1) {

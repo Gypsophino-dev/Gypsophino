@@ -17,7 +17,7 @@ int main() {
 
   gyp::game test_game("./song_maps/song_map_db.json");
   test_game.set_background_image("res/background.png");
-  test_game.set_transient(BLACK, WHITE, 60, 1);
+  test_game.set_transient(BLACK, WHITE, game_window.get_fps(), 1);
   test_game.set_cinema_call_back(&game_cinema);
 
   gyp::titlepage starter;
@@ -35,7 +35,7 @@ int main() {
   button_initial_list.push_back(start_button);
   starter.set_button_list(std::move(button_initial_list));
   starter.set_background_image("res/background.png");
-  starter.set_transient(BLACK, WHITE, 60, 1);
+  starter.set_transient(BLACK, WHITE, game_window.get_fps(), 1);
   starter.set_cinema_call_back(&game_cinema);
   starter.set_title("Gypsophino", GetFontDefault(), 100.0F, 10.0F, BLACK);
 
@@ -55,7 +55,7 @@ int main() {
   setting_page_button_list.push_back(start_button);
   setting_page.set_button_list(setting_page_button_list);
   setting_page.set_background_image("res/background.png");
-  setting_page.set_transient(BLACK, WHITE, 60, 1);
+  setting_page.set_transient(BLACK, WHITE, game_window.get_fps(), 1);
   setting_page.set_cinema_call_back(&game_cinema);
   setting_page.set_window_call_back(&game_window);
 
@@ -66,7 +66,7 @@ int main() {
   std::array<gyp::slideshow, 4> interplay;
   for (int i = 0; i < 4; i++) {
     interplay.at(i).set_background_image("res/chap_0" + std::to_string(i + 1) + ".png");
-    interplay.at(i).set_transient(BLACK, WHITE, 60, 1);
+    interplay.at(i).set_transient(BLACK, WHITE, game_window.get_fps(), 1);
     interplay.at(i).set_cinema_call_back(&game_cinema);
     interplay.at(i).set_timeout(120);
     interplay.at(i).set_call_back(-1, 1);

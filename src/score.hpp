@@ -1,19 +1,12 @@
 #pragma once
 
-#include "basic.hpp"
+#include <raylib.h>
 #include <array>
 #include <string>
 
 namespace gyp {
 const int GRADE_KIND = 6;
 const int GYP_MAX_SCORE = 1000000;
-struct letter_grade : statue {
-  std::string letter;
-};
-
-struct character : statue {
-  char c;
-};
 
 class parabolic_func {
 private:

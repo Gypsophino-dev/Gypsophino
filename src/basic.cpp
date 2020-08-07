@@ -3,10 +3,13 @@
 #include <utility>
 
 namespace gyp {
+
 statue::statue() = default; // Default constructor of rectangle set -1
 statue::~statue() = default;
+
 sprite::sprite() = default;
 sprite::~sprite() = default;
+
 void sprite::update(int t) {
   x += t * velocity.x;
   y += t * velocity.y;
