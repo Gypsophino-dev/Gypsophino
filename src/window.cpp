@@ -1,12 +1,6 @@
 #include "window.hpp"
 
-#ifndef RELEASE
-#include <iostream>
-#endif // RELEASE
-
 namespace gyp {
-
-window::window() {}
 
 window::window(int width, int height, std::string window_title, int fps)
     : width(width), height(height), window_title(std::move(window_title)),
@@ -44,9 +38,6 @@ void window::set_volume(float volume) {
 }
 
 void window::change_volume(float delta) {
-#ifndef RELEASE
-  std::cerr << "[Debug] delta: " << delta << std::endl;
-#endif // RELEASE
   this->volume += delta;
   SetMasterVolume(this->volume);
 }

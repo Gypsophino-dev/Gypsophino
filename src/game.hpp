@@ -21,7 +21,6 @@ public:
   playground plg;
 
   // Constructor & Destructor
-  explicit game(const std::string& song_db_path);
   explicit game(const std::string& song_db_path, window* window_call_back);
   ~game() = default;
   // Setter

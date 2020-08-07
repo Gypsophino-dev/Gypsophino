@@ -17,7 +17,7 @@ private:
   bool is_initialized;
 
 public:
-  window();
+  window() = default;
   window(int width, int heigh, std::string window_title, int fps);
   ~window();
   // Setter
