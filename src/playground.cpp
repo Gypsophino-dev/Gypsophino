@@ -112,13 +112,14 @@ void playground::init() {
   }
 }
 
-void playground::load(const song_map *selected_song, float fps) {
+void playground::load(const song_map *selected_song, int fps) {
   song = selected_song;
   if (song->track_number != track_number) {
     track_number = song->track_number;
     real_notes.resize(track_number);
   }
-  float frame_per_fraction = 60.0F * fps / static_cast<float>(song->bpm * song->base_fraction);
+  // 60.0F: 1 minute has 60 seconds
+  float frame_per_fraction = 60.0F * static_cast<float>(fps) / static_cast<float>(song->bpm * song->base_fraction);
   for (int i = 0; i < song->track_number; i++) {
     for (auto j = song->notes.at(i).cbegin(); j != song->notes.at(i).cend(); j++) {
       real_notes.at(i).push_back((static_cast<float>(*j) + song->offset) * frame_per_fraction);

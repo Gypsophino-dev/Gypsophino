@@ -15,7 +15,7 @@ int main() {
 
   gyp::cinema game_cinema;
 
-  gyp::game test_game("./song_maps/song_map_db.json");
+  gyp::game test_game("./song_maps/song_map_db.json", &game_window);
   test_game.set_background_image("res/background.png");
   test_game.set_transient(BLACK, WHITE, game_window.get_fps() / 2, 1);
   test_game.set_cinema_call_back(&game_cinema);

@@ -51,7 +51,7 @@ public:
   // Contain: [i].set_interator [i].init()
   // CAUTION: Init() must be run at first.
   void init();
-  void load(const song_map *selected_song, float fps);
+  void load(const song_map *selected_song, int fps);
   void play();  // play a single frame
   void pause(); // pause for a single frame
   void quit();
